@@ -1,0 +1,1 @@
+var e=new class{handlers=new Map;subscribe(e,t){let n=this.handlers.get(e)??new Set,r=t;return n.add(r),this.handlers.set(e,n),()=>{n.delete(r),n.size===0&&this.handlers.delete(e)}}publish(e,t,...[n]){let r={type:e,source:t,payload:n,timestamp:Date.now()};return this.handlers.get(e)?.forEach(e=>e(r)),this.handlers.get(`*`)?.forEach(e=>e(r)),r}};export{e as t};

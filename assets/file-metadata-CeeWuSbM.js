@@ -1,0 +1,1 @@
+function e(e){return e.etl.read(`explorer_file_open`,e.requestId,`file_metadata_extracted`)?.result}function t(e,t,n){let r=e.parameters.item;if(!r)throw Error(`No file was activated.`);return{container:`surface`,id:`${t}:${r}`,component:n,title:r.split(`/`).pop()??r}}export{t as n,e as t};

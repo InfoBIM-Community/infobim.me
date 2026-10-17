@@ -1,0 +1,33 @@
+(function(){let e=e=>e.split(`/`).length;function t(t,n){let r=[],i=[],a=[];for(let[e,a]of n){let n=t.get(e);a.kind===`dir`?n?.kind!==`dir`&&r.push(e):(n?.kind!==`file`||n.mtime!==a.mtime||n.size!==a.size)&&i.push(e)}for(let[e,r]of t)n.get(e)?.kind!==r.kind&&a.push(e);return r.sort((t,n)=>e(t)-e(n)),a.sort((t,n)=>e(n)-e(t)),{createDirs:r,writeFiles:i,remove:a}}let n=new URL(`/python/`,self.location.origin).href,r=null,i=Promise.resolve();async function a(e){let t=`${n}${e}`,r=await fetch(t,{cache:`no-store`});if(!r.ok)throw Error(`Unable to load ${e}: HTTP ${r.status}`);if(!r.headers.get(`content-type`)?.includes(`application/json`))throw Error(`Unable to load ${t}: expected JSON, received ${r.headers.get(`content-type`)??`no content type`}. Restart the server after regenerating the Python runtime.`);let i=await r.json();if(!Array.isArray(i)||!i.every(e=>typeof e==`string`))throw Error(`${e} must contain a list of strings.`);return i}async function o(){let{loadPyodide:e}=await import(
+/* @vite-ignore */
+`${n}pyodide/pyodide.mjs`),t=await e({indexURL:`${n}pyodide/`});await t.loadPackage(await a(`packages.json`));let r=(await a(`wheels.json`)).map(e=>`${n}wheels/${e}`),i=t.toPy(r);try{t.globals.set(`WHEELS`,i),await t.runPythonAsync(`import micropip
+await micropip.install(WHEELS, deps=False)`)}finally{t.globals.delete(`WHEELS`),i.destroy()}let o=await t.runPythonAsync(`from importlib.metadata import version
+version("infobim")`);if(typeof o!=`string`||!o.trim())throw Error(`The installed InfoBIM package has no version metadata.`);let s={type:`ready`,infobimVersion:o};return self.postMessage(s),t}async function s(e){let{requestId:t,argv:n,mount:i}=e;try{if(!r)throw Error(`Python has not been started by the layout.`);let e=await r;if(!i.path.startsWith(`/`)||i.path===`/`||i.path.split(`/`).some(e=>e===`..`||e===`.`))throw Error(`The project mount must be an absolute directory path.`);if(e.FS.mkdirTree(i.path),e.FS.readdir(i.path).some(e=>e!==`.`&&e!==`..`))throw Error(`The registered project location conflicts with the runtime filesystem.`);let a=null,o=!1,s=e.toPy(n),c;try{if(i.handle)await e.mountNativeFS(i.path,i.handle),o=!0,a=u(e,i.path);else for(let t of i.files??[]){if(t.path.startsWith(`/`)||t.path.split(`/`).includes(`..`))throw Error(`Invalid metadata path.`);let n=`${i.path}/${t.path}`;e.FS.mkdirTree(n.slice(0,n.lastIndexOf(`/`))),e.FS.writeFile(n,new Uint8Array(t.data))}e.globals.set(`CWD`,i.path),e.globals.set(`ARGV`,s),c=JSON.parse(String(await e.runPythonAsync(`
+import os, sys, json, io, contextlib
+from infobim.cli import main
+previous_cwd, previous_argv = os.getcwd(), sys.argv
+output, errors = io.StringIO(), io.StringIO()
+exit_code = 0
+try:
+    os.chdir(CWD)
+    sys.argv = list(ARGV)
+    with contextlib.redirect_stdout(output), contextlib.redirect_stderr(errors):
+        try:
+            main()
+        except SystemExit as result:
+            exit_code = result.code if isinstance(result.code, int) else (0 if result.code is None else 1)
+finally:
+    os.chdir(previous_cwd)
+    sys.argv = previous_argv
+json.dumps({"code": exit_code, "stdout": output.getvalue(), "stderr": errors.getvalue()})
+`))),o&&a&&i.handle&&await f(e,i.path,i.handle,a)}finally{s.destroy(),e.globals.delete(`CWD`),e.globals.delete(`ARGV`),o&&e.FS.unmount(i.path),e.globals.set(`MOUNT_PATH`,i.path);try{await e.runPythonAsync(`import shutil
+shutil.rmtree(MOUNT_PATH, ignore_errors=True)`)}finally{e.globals.delete(`MOUNT_PATH`)}}let l={type:`result`,requestId:t,...c};self.postMessage(l)}catch(e){let n={type:`command-failed`,requestId:t,message:e instanceof Error?e.message:String(e)};self.postMessage(n)}}async function c(e){let{requestId:t,identifier:n,device:i,environment:a,language:o,parameters:s}=e;try{if(!r)throw Error(`Python has not been started by the layout.`);let e=await r;e.globals.set(`IDENTIFIER`,n),e.globals.set(`DEVICE`,i),e.globals.set(`ENVIRONMENT`,a),e.globals.set(`LANGUAGE`,o);let c=e.toPy(s??{});e.globals.set(`PARAMETERS`,c);try{let n={type:`feature-message-result`,requestId:t,text:JSON.parse(String(await e.runPythonAsync(`
+import json
+from brasidatacenter.tool.adapter.feature_message import first_message
+json.dumps({"text": first_message(IDENTIFIER, DEVICE, ENVIRONMENT, LANGUAGE, PARAMETERS)})
+`))).text};self.postMessage(n)}finally{e.globals.delete(`IDENTIFIER`),e.globals.delete(`DEVICE`),e.globals.delete(`ENVIRONMENT`),e.globals.delete(`LANGUAGE`),e.globals.delete(`PARAMETERS`),c.destroy()}}catch(e){let n={type:`command-failed`,requestId:t,message:e instanceof Error?e.message:String(e)};self.postMessage(n)}}async function l(e){let{requestId:t,packages:n}=e;try{if(!r)throw Error(`Python has not been started by the layout.`);let e=await r,i=e.toPy(n);e.globals.set(`PACKAGES`,i);try{let n={type:`package-versions-result`,requestId:t,versions:JSON.parse(String(await e.runPythonAsync(`
+import json
+import micropip
+installed = micropip.list()
+json.dumps({name: (installed[name].version if name in installed else None) for name in PACKAGES})
+`)))};self.postMessage(n)}finally{e.globals.delete(`PACKAGES`),i.destroy()}}catch(e){let n={type:`command-failed`,requestId:t,message:e instanceof Error?e.message:String(e)};self.postMessage(n)}}function u(e,t){let n=/* @__PURE__ */ new Map,r=i=>{let a=i?`${t}/${i}`:t;for(let o of e.FS.readdir(a)){if(o===`.`||o===`..`)continue;let a=i?`${i}/${o}`:o,s=e.FS.stat(`${t}/${a}`),c=e.FS.isDir(s.mode);n.set(a,{kind:c?`dir`:`file`,mtime:new Date(s.mtime).getTime(),size:c?0:s.size}),c&&r(a)}};return r(``),n}async function d(e,t,n){let r=e;for(let e of t)r=await r.getDirectoryHandle(e,{create:n});return r}async function f(e,n,r,i){let a=t(i,u(e,n));for(let e of a.remove){let t=e.split(`/`);try{await(await d(r,t.slice(0,-1),!1)).removeEntry(t[t.length-1])}catch(e){if(!(e instanceof DOMException))throw e;if(e.name===`NotFoundError`||e.name===`InvalidModificationError`)continue;throw e}}for(let e of a.createDirs)await d(r,e.split(`/`),!0);for(let t of a.writeFiles){let i=t.split(`/`),a=await(await(await d(r,i.slice(0,-1),!0)).getFileHandle(i[i.length-1],{create:!0})).createWritable();await a.write(e.FS.readFile(`${n}/${t}`)),await a.close()}}self.onmessage=({data:e})=>{e.type===`start`&&!r?(r=o(),r.catch(e=>{let t={type:`failed`,message:e instanceof Error?e.message:String(e)};self.postMessage(t)})):e.type===`run`?i=i.then(()=>s(e)):e.type===`feature-message`?i=i.then(()=>c(e)):e.type===`package-versions`&&(i=i.then(()=>l(e)))}})();

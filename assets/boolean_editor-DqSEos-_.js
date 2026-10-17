@@ -1,0 +1,1 @@
+import{t as e}from"./editor-cdBJo9rd.js";function t({value:t,label:n}){let r=document.createElement(`input`);return r.type=`checkbox`,r.className=`entity-editor`,r.checked=t.trim().toLowerCase()===`true`||t.trim()===`1`,r.setAttribute(`aria-label`,n),e(r,()=>r.checked?`true`:`false`,()=>!0)}export{t as default};

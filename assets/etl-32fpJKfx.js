@@ -1,0 +1,1 @@
+var e=class{records=new Map;write(e,t,n,r){let i=this.records.get(e)??new Map,a=i.get(t)??new Map;a.set(n,{state:n,...r}),i.set(t,a),this.records.set(e,i)}read(e,t,n){return this.records.get(e)?.get(t)?.get(n)}clear(e,t){this.records.get(e)?.delete(t)}};export{e as t};

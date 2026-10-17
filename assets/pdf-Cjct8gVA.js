@@ -1,0 +1,1 @@
+import{t as e}from"./file-panel-D02zVjtL.js";var t=e({prefix:`pdf`,className:`pdf-panel`,closedEvent:`presentation.main.pdf.closed`,render:(e,t)=>{let n=URL.createObjectURL(new Blob([e],{type:`application/pdf`})),r=document.createElement(`iframe`);return r.title=e.name,r.src=n,t.appendChild(r),()=>URL.revokeObjectURL(n)}});export{t as default};

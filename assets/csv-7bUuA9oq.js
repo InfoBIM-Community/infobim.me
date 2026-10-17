@@ -1,0 +1,3 @@
+import{t as e}from"./file-panel-D02zVjtL.js";import{t}from"./table-DgJHTAGD.js";function n(e){let t=[],n=[],r=``,i=!1;for(let a=0;a<e.length;a+=1){let o=e[a];i?o===`"`&&e[a+1]===`"`?(r+=`"`,a+=1):o===`"`?i=!1:r+=o:o===`"`&&r===``?i=!0:o===`,`?(n.push(r),r=``):o===`
+`||o===`\r`?(o===`\r`&&e[a+1]===`
+`&&(a+=1),n.push(r),r=``,t.push(n),n=[]):r+=o}return(r!==``||n.length>0)&&(n.push(r),t.push(n)),t}var r=e({prefix:`csv`,className:`csv-panel`,closedEvent:`presentation.main.csv.closed`,render:async(e,r)=>{r.appendChild(t(n(await e.text())))}});export{r as default};

@@ -1,0 +1,1 @@
+var e=new Map,t=(e,t)=>`${e}\u0000${t}`;function n(n,r,i){e.set(t(n,r),i)}function r(n,r){let i=e.get(t(n,r));return i&&!i.element.isConnected?(e.delete(t(n,r)),null):i??null}export{n,r as t};

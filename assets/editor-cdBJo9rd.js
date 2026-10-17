@@ -1,0 +1,1 @@
+function e(e,t=()=>e.value,n=()=>e.checkValidity()){let r=[],i=()=>r.forEach(e=>e());return e.addEventListener(`input`,i),e.addEventListener(`change`,i),{element:e,value:t,isValid:n,onChange:e=>{r.push(e)}}}export{e as t};

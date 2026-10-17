@@ -1,0 +1,1 @@
+var e=/^urn:ontobdc:storage\/container\/[^/]+\/payload\/document\/(.+)$/;function t(t){let n=e.exec(t);return n?decodeURIComponent(n[1]):void 0}function n(e){let n=t(e);return n===void 0?void 0:n.slice(n.lastIndexOf(`/`)+1)}export{n,t};

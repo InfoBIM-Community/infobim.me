@@ -1,0 +1,1 @@
+var e=class e{static instance=null;views=new Map;static getInstance(){return e.instance??=new e,e.instance}register(e,t){return this.views.set(e,t),()=>{this.views.get(e)===t&&this.views.delete(e)}}get(e){return this.views.get(e)}};export{e as t};

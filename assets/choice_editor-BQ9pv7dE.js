@@ -1,0 +1,1 @@
+import{t as e}from"./editor-cdBJo9rd.js";function t({value:t,label:n,options:r=[],optionLabels:i={}}){let a=document.createElement(`select`);a.className=`entity-editor`,a.setAttribute(`aria-label`,n);let o=r.includes(t)||t===``?r:[t,...r];for(let e of o){let t=document.createElement(`option`);t.value=e,t.textContent=i[e]??e,a.append(t)}return a.value=t,e(a)}export{t as default};

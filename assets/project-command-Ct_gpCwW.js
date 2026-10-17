@@ -1,0 +1,1 @@
+var e=`infobim project --refresh`,t=`infobim project --inspect`,n=`infobim project --entity`;export{t as n,e as r,n as t};

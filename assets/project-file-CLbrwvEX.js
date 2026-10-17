@@ -1,0 +1,1 @@
+async function e(e,t){let n=t.split(`/`).filter(Boolean),r=n.at(-1);if(!r)throw Error(`Invalid file path: ${t}`);let i=e;for(let e of n.slice(0,-1))i=await i.getDirectoryHandle(e);return await(await i.getFileHandle(r)).getFile()}export{e as t};

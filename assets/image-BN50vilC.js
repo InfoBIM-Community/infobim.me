@@ -1,0 +1,1 @@
+import{t as e}from"./file-panel-D02zVjtL.js";var t=e({prefix:`image`,className:`image-panel`,closedEvent:`presentation.main.image.closed`,render:(e,t)=>{let n=URL.createObjectURL(e),r=document.createElement(`img`);return r.alt=e.name,r.src=n,t.appendChild(r),()=>URL.revokeObjectURL(n)}});export{t as default};

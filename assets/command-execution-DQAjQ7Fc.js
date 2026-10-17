@@ -1,0 +1,1 @@
+var e=class extends Error{reason;constructor(e){super(e),this.reason=e,this.name=`CommandInvalidError`}};export{e as t};
