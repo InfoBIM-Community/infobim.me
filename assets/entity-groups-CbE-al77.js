@@ -1,0 +1,1 @@
+function e(e,t){return e.map(e=>{let n=t.find(t=>t.id===e.id)?.items;if(!n)return e;let r=e.items.map(e=>n.find(t=>t.id===e.id)??e);return{...e,items:[...r,...n.filter(t=>!e.items.some(e=>e.id===t.id))]}})}export{e as t};

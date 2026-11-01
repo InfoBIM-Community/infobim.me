@@ -1,0 +1,1 @@
+var e=`http://datacenter.app.br/ontology/domain/annotation/taxonomy/type.ttl#Annotation`,t=null,n=()=>t,r=e=>{t=e};export{n,r,e as t};

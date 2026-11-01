@@ -1,0 +1,1 @@
+var e=`http://datacenter.app.br/ontology/domain/productivity/taxonomy/type.ttl#`,t=`${e}Task`,n=`${e}Goal`,r=`${e}Milestone`,i=`ontobdc container --entity task --list`,a=`ontobdc container --entity milestone --list`,o=`ontobdc container --entity goal --tree`,s={[o]:n};export{t as a,a as i,o as n,i as o,r,s,n as t};

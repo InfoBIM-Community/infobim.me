@@ -1,0 +1,1 @@
+var e=class extends Error{entityType;constructor(e){super(`The ontology has no URI registered for the entity type ${e}.`),this.entityType=e,this.name=`EntityFacadeUnavailableError`}};export{e as t};

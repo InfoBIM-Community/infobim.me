@@ -1,0 +1,1 @@
+var e=new Map,t=(e,t)=>`${e}\u0000${t}`;function n(n,r,i){e.set(t(n,r),i)}function r(t){let n=`${t}\u0000`;return[...e.keys()].filter(e=>e.startsWith(n)).map(e=>e.slice(n.length)).filter(e=>i(t,e)?.documents===!0)}function i(n,r){return e.get(t(n,r))??null}function a(t){let n=`${t}\u0000`;for(let t of[...e.keys()])t.startsWith(n)&&e.delete(t)}export{n as i,i as n,a as r,r as t};

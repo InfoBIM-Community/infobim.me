@@ -1,0 +1,1 @@
+var e=class extends Error{constructor(){super(`The login was cancelled: its tab was closed.`),this.name=`LoginCancelledError`}};export{e as t};

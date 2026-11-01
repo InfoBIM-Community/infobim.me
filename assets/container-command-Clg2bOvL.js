@@ -1,0 +1,1 @@
+var e=`ontobdc container --refresh`,t=`ontobdc container --inspect`,n=`ontobdc container --entity`,r=`ontobdc container --entity "Day" --list`;export{r as i,t as n,e as r,n as t};

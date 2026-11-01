@@ -1,8 +1,6 @@
-<p align="center">
-  <img src="infobim-logo.png" alt="InfoBIM" width="96">
-</p>
-
-<h1 align="center">InfoBIM</h1>
+<h1 align="center">
+  <img src="infobim-logo.png" alt="InfoBIM" width="300">
+</h1>
 
 <p align="center">
   <strong>Your building project, organised and understood, right in your browser.</strong><br>
