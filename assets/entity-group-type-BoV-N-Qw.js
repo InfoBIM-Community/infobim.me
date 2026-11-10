@@ -1,0 +1,1 @@
+function e(e){if(e.entityTypes.length===0)throw Error(`The group ${e.title} declares no entity type to create an entity of.`);if(e.entityTypes.length>1)throw Error(`The group ${e.title} declares several entity types (${e.entityTypes.join(`, `)}): the request must say which one to create.`);return e.entityTypes[0]}export{e as t};
