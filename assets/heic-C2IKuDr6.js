@@ -1,1 +1,0 @@
-import{t as e}from"./file-panel-CPDGfdNz.js";import{t}from"./heic-convert-NkrQO9sw.js";var n=e({prefix:`heic`,className:`image-panel`,closedEvent:`presentation.main.heic.closed`,render:async(e,n)=>{let r=URL.createObjectURL(await t(e)),i=document.createElement(`img`);return i.alt=e.name,i.src=r,n.appendChild(i),()=>URL.revokeObjectURL(r)}});export{n as default};

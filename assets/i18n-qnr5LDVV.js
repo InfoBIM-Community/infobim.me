@@ -1,1 +1,0 @@
-export{r as getLocale,i as onLocaleChange}from"./i18n-xwIcjlwN.js";

@@ -1,0 +1,1 @@
+import{t as e}from"./file-panel-HFZ77Jaq.js";var t=e({prefix:`txt`,className:`txt-panel`,closedEvent:`presentation.main.txt.closed`,render:async(e,t)=>{let n=document.createElement(`pre`);n.textContent=await e.text(),t.appendChild(n)}});export{t as default};
